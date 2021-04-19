@@ -19,10 +19,6 @@ public enum TipoPrenda {
     this.categoria = categoriaPrenda;
   }
 
-  public CategoriaPrenda getCategoria() {
-    return this.categoria;
-  }
-
   public Boolean esValidaLa(CategoriaPrenda categoria) {
       return this.categoria.equals(categoria);
   }
