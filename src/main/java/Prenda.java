@@ -26,6 +26,7 @@ public class Prenda {
     this.colorSecundario = colorSecundario;
 
     // La prenda no lanzo ninguna excepción al momento de crearla
+    // No es necesario este mensaje, pero si llega hasta aca esta all good :)
     System.out.println("Se creo la prenda correctamente");
   }
 
