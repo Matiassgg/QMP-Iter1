@@ -1,6 +1,4 @@
 public enum TipoPrenda {
-
-  // Todas las prendas con su categoria correspondiente
   ZAPATOS(CategoriaPrenda.CALZADO),
   BOTAS(CategoriaPrenda.CALZADO),
   ZAPATILLAS(CategoriaPrenda.CALZADO),
@@ -17,6 +15,10 @@ public enum TipoPrenda {
 
   TipoPrenda(CategoriaPrenda categoriaPrenda) {
     this.categoria = categoriaPrenda;
+  }
+
+  public CategoriaPrenda getCategoria() {
+    return this.categoria;
   }
 
   public Boolean esValidaLa(CategoriaPrenda categoria) {
