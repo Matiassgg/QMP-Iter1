@@ -38,7 +38,7 @@ public class PrendaBorrador {
   }
 
   public void setColorSecundario(Color colorSecundario) {
-    // No me importa validad el color secundario ya que es opcional
+    // No me importa validar el color secundario ya que es opcional
     this.colorSecundario = colorSecundario;
   }
 
