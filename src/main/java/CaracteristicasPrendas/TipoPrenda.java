@@ -1,27 +1,61 @@
 package CaracteristicasPrendas;
 
-// En el Enum del diagrama no coloco todas las constantes
-// por un tema de legibilidad del Diagrama en si.
-// Al ser varios Tipos de Prenda se dejan solo constantes a modo ejemplo
-public enum TipoPrenda {
-  ZAPATOS(CategoriaPrenda.CALZADO),
-  BOTAS(CategoriaPrenda.CALZADO),
-  ZAPATILLAS(CategoriaPrenda.CALZADO),
-  CROCS(CategoriaPrenda.CALZADO),
-  CAMISA_MANGA_CORTA(CategoriaPrenda.PARTE_SUPERIOR),
-  REMERA_MANGA_CORTA(CategoriaPrenda.PARTE_SUPERIOR),
-  REMERA_MANGA_LARGA(CategoriaPrenda.PARTE_SUPERIOR),
-  MUSCULOSA(CategoriaPrenda.PARTE_SUPERIOR),
-  PANTALON(CategoriaPrenda.PARTE_INFERIOR),
-  PANUIELO(CategoriaPrenda.ACCESORIOS),
-  ANTEOJOS_DE_SOL(CategoriaPrenda.ACCESORIOS),
-  SUETER(CategoriaPrenda.PARTE_SUPERIOR),
-  GORRO(CategoriaPrenda.ACCESORIOS),
-  CHOMBA(CategoriaPrenda.PARTE_SUPERIOR);
+import java.util.Arrays;
+import java.util.List;
 
+public enum TipoPrenda {
+  // Materiales validos para una prenda
+  ZAPATOS(CategoriaPrenda.CALZADO, Arrays.asList(
+      MaterialPrenda.GOMA,
+      MaterialPrenda.CUERO
+  )),
+  BOTAS(CategoriaPrenda.CALZADO, Arrays.asList(
+      MaterialPrenda.GOMA,
+      MaterialPrenda.CUERO
+  )),
+  ZAPATILLAS(CategoriaPrenda.CALZADO, Arrays.asList(
+      MaterialPrenda.GOMA
+  )),
+  CROCS(CategoriaPrenda.CALZADO, Arrays.asList(
+      MaterialPrenda.GOMA
+  )),
+  CAMISA_MANGA_CORTA(CategoriaPrenda.PARTE_SUPERIOR, Arrays.asList(
+      MaterialPrenda.ALGODON
+  )),
+  REMERA_MANGA_CORTA(CategoriaPrenda.PARTE_SUPERIOR, Arrays.asList(
+      MaterialPrenda.ALGODON
+  )),
+  REMERA_MANGA_LARGA(CategoriaPrenda.PARTE_SUPERIOR, Arrays.asList(
+      MaterialPrenda.ALGODON
+  )),
+  MUSCULOSA(CategoriaPrenda.PARTE_SUPERIOR, Arrays.asList(
+      MaterialPrenda.ALGODON
+  )),
+  PANTALON(CategoriaPrenda.PARTE_INFERIOR, Arrays.asList(
+      MaterialPrenda.ALGODON,
+      MaterialPrenda.JEAN
+  )),
+  PANUIELO(CategoriaPrenda.ACCESORIOS, Arrays.asList(
+      MaterialPrenda.LANA
+  )),
+  ANTEOJOS_DE_SOL(CategoriaPrenda.ACCESORIOS, Arrays.asList(
+      MaterialPrenda.PLASTICO
+  )),
+  SUETER(CategoriaPrenda.PARTE_SUPERIOR, Arrays.asList(
+      MaterialPrenda.LANA
+  )),
+  GORRO(CategoriaPrenda.ACCESORIOS, Arrays.asList(
+      MaterialPrenda.GOMA
+  )),
+  CHOMBA(CategoriaPrenda.PARTE_SUPERIOR, Arrays.asList(
+      MaterialPrenda.ALGODON
+  ));
+
+  List<MaterialPrenda> materialesValidos;
   CategoriaPrenda categoria;
 
-  TipoPrenda(CategoriaPrenda categoriaPrenda) {
+  TipoPrenda(CategoriaPrenda categoriaPrenda, List<MaterialPrenda> materialesValidos) {
+    this.materialesValidos = materialesValidos;
     this.categoria = categoriaPrenda;
   }
 
@@ -29,9 +63,14 @@ public enum TipoPrenda {
     return this.categoria;
   }
 
-  public Boolean esValidaLa(CategoriaPrenda categoria) {
+  public Boolean esValidaLaCategoria(CategoriaPrenda categoria) {
       return this.categoria.equals(categoria);
   }
+
+  public boolean esValidoElMaterial(MaterialPrenda material) {
+    return materialesValidos.contains(material);
+  }
+
 }
 
 

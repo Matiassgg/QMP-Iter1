@@ -2,19 +2,16 @@ package Prendas;
 import CaracteristicasPrendas.*;
 import Exepciones.PrendaInvalidaException;
 
-// Ahora se empieza a construir una prenda de a poco en base a su borrador
-// Las validaciones se hacen en el borrador
 public class PrendaBorrador {
   TipoPrenda tipo;
   MaterialPrenda material;
   Color colorPrimario;
   Color colorSecundario;
   TramaPrenda tela;
+  TramaPrenda telaPorDefecto;
+  Integer temperatura;
 
-  // Voy creando de 'a poco' la prenda borrador en base a como la cree alguien
-  // para eventualmente, continuar después (si no se completo la misma)
   public PrendaBorrador(TipoPrenda tipo) {
-    // Primero viene el tipo
     this.setTipo(tipo);
   }
 
@@ -26,7 +23,6 @@ public class PrendaBorrador {
   }
 
   public void setMaterial(MaterialPrenda material) {
-    this.validarMaterialConTipoPrenda(material);
     this.material = material;
   }
 
@@ -38,39 +34,47 @@ public class PrendaBorrador {
   }
 
   public void setColorSecundario(Color colorSecundario) {
-    // No me importa validar el color secundario ya que es opcional
     this.colorSecundario = colorSecundario;
   }
 
   public void setTela(TramaPrenda tela) {
-    // Por defecto, la tela es de tipo Lisa sino se especifica nada
     if(tela == null) {
-      this.tela = TramaPrenda.LISA;
+      this.tela = telaPorDefecto;
     }
     else {
       this.tela = tela;
     }
   }
 
+  public void setTelaPorDefecto(TramaPrenda telaPorDefecto) {
+    this.telaPorDefecto = telaPorDefecto;
+  }
+
   private void validarMaterialConTipoPrenda(MaterialPrenda material) {
     if(material == null) {
       throw new PrendaInvalidaException("se debe especificar el material de la la prenda");
     }
-    else if(!material.esValidoEl(tipo)) {
+    else if(!tipo.esValidoElMaterial(material)) {
       throw new PrendaInvalidaException("el material de la prenda no se condice con tu tipo");
     }
   }
 
-  public Prenda crearPrenda() {
-    // this.chequearDatosNulos(tipo, material, colorPrimario);
-    /*
-      Lo comento y dejo a propósito para aclarar que:
-      Las validaciones de este método ahora pasan a hacerlas cada
-      uno de los métodos anteriores al momento de la creación
-      Esto se hizo asi para poder ir construyendo de a poco la prenda
-      y que las validaciones se corran en cada paso de 'construcción'
-    */
-    return new Prenda(tipo, colorPrimario, colorSecundario, material, tela);
+  public void setTemperatura(Integer temperatura) {
+    this.temperatura = temperatura;
   }
 
+  public Prenda crearPrenda() {
+    if(!this.estaCompleta()) {
+      throw new PrendaInvalidaException("la prenda esta incompleta");
+    }
+    return new Prenda(tipo, colorPrimario, colorSecundario, material, tela, temperatura);
+  }
+
+  private boolean estaCompleta() {
+    return this.tipo != null &&
+        this.material != null &&
+        this.colorPrimario != null &&
+        this.tela != null &&
+        this.temperatura != null;
+  }
 }

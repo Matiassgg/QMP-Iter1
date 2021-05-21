@@ -1,15 +1,18 @@
 package Prendas;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Atuendo {
-  ArrayList<Prenda> prendas;
+  List<Prenda> prendas;
 
   public Atuendo() {
-    this.prendas = new ArrayList<>();
+    prendas = new ArrayList<>();
   }
 
-  public void cargarPrenda(Prenda prenda) {
-    prendas.add(prenda);
+  public boolean esAptoParaLaTemperatura(Integer temperatura) {
+    return prendas
+        .stream()
+        .allMatch(Prenda -> Prenda.esAptaParaLaTemperatura(temperatura));
   }
 
 }
