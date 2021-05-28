@@ -1,4 +1,4 @@
-package Prendas;
+package Prenda;
 import CaracteristicasPrendas.*;
 import Exepciones.PrendaInvalidaException;
 

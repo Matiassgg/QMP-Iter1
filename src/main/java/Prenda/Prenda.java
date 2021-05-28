@@ -1,4 +1,4 @@
-package Prendas;
+package Prenda;
 import CaracteristicasPrendas.*;
 
 public class Prenda {
