@@ -1,55 +1,42 @@
 package Usuario;
 
-import Guardarropas.Guardarropas;
-import Recomendacion.Recomendacion;
+import Sugerencia.Sugerencia;
+import accionesDeAlertas.AccionDeAlertas;
+import accionesDeAlertas.Alerta;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Usuario {
-  List<Guardarropas> guardarropas;
-  List<Recomendacion> recomendaciones;
-  List<Recomendacion> recomendacionesAceptadas;
+  Sugerencia sugerenciaDiaria;
+  List<AccionDeAlertas> accionesDeAlertas;
+  String address;
 
-  public Usuario(List<Guardarropas> guardarropasCompartido) {
-    this.guardarropas = guardarropasCompartido;
+  public Usuario(Sugerencia sugerenciaDiaria) {
+    this.sugerenciaDiaria = sugerenciaDiaria;
   }
 
-  // Alguien (un usuario) me propone una recomendacion para mi guardarropas
-  public void agregarRecomendacion(Recomendacion recomendacion) {
-    recomendaciones.add(recomendacion);
+  public Sugerencia obtenerSugerenciaDiaria() {
+    return sugerenciaDiaria;
   }
 
-  // Acepto la recomendacion, la quito de mi lista pendiente de recomendaciones y la agrego como recomendacion aceptada
-  public void aceptarRecomendacion(Recomendacion recomendacion) {
-    recomendacion.aplicateEnElGuardarropas();
-    this.eliminarRecomendacion(recomendacion);
-    this.agregarRecomendacionAceptada(recomendacion);
+  public void actualizarSugerencia(Sugerencia nuevaSugerenciaDiaria) {
+    this.sugerenciaDiaria = nuevaSugerenciaDiaria;
   }
 
-  // Es un pasamanos esto y se parece MUCHO a aceptarRecomendacion(...), algo huele mal (?
-  public void rechazarRecomendacion(Recomendacion recomendacion) {
-    this.eliminarRecomendacion(recomendacion);
+  public void alertasGeneradas(List<Alerta> alertas) {
+    this.accionesDeAlertas.forEach(accionDeAlertas -> accionDeAlertas.notificarCambiosEnAlertas(this, alertas));
   }
 
-  public void deshacerRecomendacionAceptada(Recomendacion recomendacion) {
-    recomendacionesAceptadas.remove(recomendacion);
+  public void configurarAccionAEjecutar(AccionDeAlertas accionDeAlertas, boolean ejecucion) {
+    AccionDeAlertas accionConfigurableBuscada = accionesDeAlertas
+        .stream()
+        .filter(accionDeAlertas1 -> accionDeAlertas == accionDeAlertas1).collect(Collectors.toList())
+        .get(0);
+    accionConfigurableBuscada.setSePuedeEjecutar(ejecucion);
   }
 
-  //////////////////////////////////////////////////////////////////////////////////
-
-  public List<Recomendacion> getPropuestasModificacion() {
-    return recomendaciones;
+  public String getAddress() {
+    return address;
   }
-
-  public List<Recomendacion> getRecomendacionesAceptadas() {
-    return recomendacionesAceptadas;
-  }
-
-  private void eliminarRecomendacion(Recomendacion recomendacion) {
-    recomendaciones.remove(recomendacion);
-  }
-
-  private void agregarRecomendacionAceptada(Recomendacion recomendacion) {
-    recomendacionesAceptadas.add(recomendacion);
-  }
-
 }
